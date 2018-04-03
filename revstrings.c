@@ -15,6 +15,8 @@
 // =================================================================================
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int LEN = 250;
 
@@ -22,16 +24,25 @@ int main(void)
 {
     int index = 0;
     char str[LEN];
-    char buf[100];
+    char **buf;
 
-    for(; index < 100 || fgets(str, LEN, stdin) != NULL; index++)
+    buf = malloc(100 * sizeof(char));
+
+    for(; index < 100; index++)
     {
-        buf[index] = str[LEN];
+        if(fgets(str, LEN, stdin) == NULL)
+        {
+            break;
+        }
+        buf[index] = malloc(LEN);
+        strcpy(buf[index], str);
     }
 
     for(; index >= 0; index--)
     {
         printf("%s\n", buf[index]);
     }
+
+    free(buf);
     return 0;
 }
